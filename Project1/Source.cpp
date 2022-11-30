@@ -7,7 +7,7 @@
 #include <queue>
 #include <algorithm>
 using namespace std;
-const int spacing = 30;
+const uint32_t spacing = 30;
 bool  executingSRTN = false;
 bool executingPriority = false;
 struct Process
@@ -180,29 +180,29 @@ void SRTN(string output, vector<Process> ProcessList)
     vector<Process> SRTN2;
     vector<Process> remainingProcessList;
     vector<Process> ready;
-    vector<int> processChangeTime; //for gantt chart output
+    vector<uint32_t> processChangeTime; //for gantt chart output
     vector<string> processName; //for gantt chart output
 
     Process running;
     bool changeProcess = false;
-    int totalBurst = 0;
-    int executionTime = 0;
+    uint32_t totalBurst = 0;
+    uint32_t executionTime = 0;
 
-    for (int i = 0; i < ProcessList.size(); i++)
+    for (uint32_t i = 0; i < ProcessList.size(); i++)
     {
         SRTN2.push_back(ProcessList[i]);
         remainingProcessList.push_back(ProcessList[i]);
     }
 
-    for (int i = 0; i < SRTN2.size(); i++)
+    for (uint32_t i = 0; i < SRTN2.size(); i++)
     {
         totalBurst = totalBurst + SRTN2[i].CPU_Brust;
     }
-    int time = 0;
+    uint32_t time = 0;
 
     while (remainingProcessList.size() != 0)
     {
-        for (int i = 0; i < SRTN2.size(); i++)
+        for (uint32_t i = 0; i < SRTN2.size(); i++)
         {
             if (time == SRTN2[i].ArrivalTime)
             {
@@ -239,7 +239,7 @@ void SRTN(string output, vector<Process> ProcessList)
         {
             changeProcess = true;
 
-            for (int i = 0; i < remainingProcessList.size(); i++)
+            for (uint32_t i = 0; i < remainingProcessList.size(); i++)
             {
                 if (running.Name == remainingProcessList[i].Name)
                 {
@@ -256,7 +256,7 @@ void SRTN(string output, vector<Process> ProcessList)
                 }
             }
 
-            for (int i = 0; i < SRTN2.size(); i++)
+            for (uint32_t i = 0; i < SRTN2.size(); i++)
             {
                 if (running.Name == SRTN2[i].Name)
                 {
@@ -285,7 +285,7 @@ void SRTN(string output, vector<Process> ProcessList)
     if (processName.size() != 0)
     {
         fo << processChangeTime[0] << " ~ ";
-        for (int i = 1; i < processChangeTime.size() - 1; i++)
+        for (uint32_t i = 1; i < processChangeTime.size() - 1; i++)
         {
             fo << processName[i - 1] << " ~ ";
             fo << processChangeTime[i] << " ~ ";
@@ -293,7 +293,7 @@ void SRTN(string output, vector<Process> ProcessList)
         fo << processName[processChangeTime.size() - 2] << " ~ ";
         fo << processChangeTime[processChangeTime.size() - 1] << endl;
 
-        for (int i = 0; i < SRTN2.size(); i++)
+        for (uint32_t i = 0; i < SRTN2.size(); i++)
         {
             SRTN2[i].TT = SRTN2[i].EndTime - SRTN2[i].ArrivalTime;
             SRTN2[i].WT = SRTN2[i].TT - SRTN2[i].CPU_Brust;
@@ -326,28 +326,28 @@ void Priority(string output, vector<Process> ProcessList)
     vector<Process> Priority2;
     vector<Process> remainingProcessList;
     vector<Process> ready;
-    vector<int> processChangeTime;
+    vector<uint32_t> processChangeTime;
     vector<string> processName;
 
     Process running;
     bool changeProcess = false;
-    int totalBurst = 0;
-    int executionTime = 0;
+    uint32_t totalBurst = 0;
+    uint32_t executionTime = 0;
 
-    for (int i = 0; i < ProcessList.size(); i++)
+    for (uint32_t i = 0; i < ProcessList.size(); i++)
     {
         Priority2.push_back(ProcessList[i]);
         remainingProcessList.push_back(ProcessList[i]);
     }
 
-    for (int i = 0; i < Priority2.size(); i++)
+    for (uint32_t i = 0; i < Priority2.size(); i++)
     {
         totalBurst = totalBurst + Priority2[i].CPU_Brust;
     }
-    int time = 0;
+    uint32_t time = 0;
     while (remainingProcessList.size() != 0)
     {
-        for (int i = 0; i < Priority2.size(); i++)
+        for (uint32_t i = 0; i < Priority2.size(); i++)
         {
             if (time == Priority2[i].ArrivalTime)
             {
@@ -400,7 +400,7 @@ void Priority(string output, vector<Process> ProcessList)
         {
             changeProcess = true;
 
-            for (int i = 0; i < remainingProcessList.size(); i++)
+            for (uint32_t i = 0; i < remainingProcessList.size(); i++)
             {
                 if (running.Name == remainingProcessList[i].Name)
                 {
@@ -417,7 +417,7 @@ void Priority(string output, vector<Process> ProcessList)
                 }
             }
 
-            for (int i = 0; i < Priority2.size(); i++)
+            for (uint32_t i = 0; i < Priority2.size(); i++)
             {
                 if (running.Name == Priority2[i].Name)
                 {
@@ -448,7 +448,7 @@ void Priority(string output, vector<Process> ProcessList)
     if (processName.size() != 0)
     {
         fo << processChangeTime[0] << " ~ ";
-        for (int i = 1; i < processChangeTime.size() - 1; i++)
+        for (uint32_t i = 1; i < processChangeTime.size() - 1; i++)
         {
             fo << processName[i - 1] << " ~ "; //ghi file
             fo << processChangeTime[i] << " ~ "; //ghi file
@@ -456,7 +456,7 @@ void Priority(string output, vector<Process> ProcessList)
         fo << processName[processChangeTime.size() - 2] << " ~ "; //ghi file
         fo << processChangeTime[processChangeTime.size() - 1] << endl; //ghi file
 
-        for (int i = 0; i < Priority2.size(); i++)
+        for (uint32_t i = 0; i < Priority2.size(); i++)
         {
             Priority2[i].TT = Priority2[i].EndTime - Priority2[i].ArrivalTime;
             Priority2[i].WT = Priority2[i].TT - Priority2[i].CPU_Brust;
@@ -471,7 +471,7 @@ void Priority(string output, vector<Process> ProcessList)
 
     }
 }
-int main()
+uint32_t main()
 {
     vector<Process>ProcessList;
     uint32_t numberOfProcess, quantum;
